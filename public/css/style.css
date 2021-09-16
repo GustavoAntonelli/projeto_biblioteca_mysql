@@ -1,0 +1,20 @@
+nav{
+    background-color: steelblue;
+}
+
+button{
+    background-color: steelblue;
+}
+
+h6, p, span, .copy{
+    color: white;
+}
+
+#logo{
+    width: 13vw;
+}
+
+footer{
+    margin-top: 25vh;
+    background-color: steelblue;
+}
