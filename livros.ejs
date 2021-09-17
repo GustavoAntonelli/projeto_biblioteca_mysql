@@ -70,7 +70,14 @@
                                 <td><%=rows.nome_livro %></td>
                                 <td><%=rows.autor_livro %></td>
                                 <td><%=rows.genero_livro %></td>
+
+                                <td>
+                                  <a href="/editarLivro/<%=rows.id_livro %>" class="btn btn-warning">Editar</a>
+                                  <a href="/deletarLivro/<%=rows.id_livro %>" class="btn btn-danger">Deletar</a>
+                              </td>
                             </tr>
+
+                            
                         <% }) %>
                         <% } %>
                     </tbody>

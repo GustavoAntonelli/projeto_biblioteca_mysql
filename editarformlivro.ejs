@@ -22,15 +22,15 @@
             <form action="/editarLivro" method="POST">
                 <div class="form-group">
                     <label for="nome">Nome</label>
-                    <input type="text" id="nome" name="nome" placeholder="Nome" class="form-control"
-                        onblur="valida_nome(this)" required value="<%=livro_item.nome %>">
+                    <input type="text" id="nome" name="nome_livro" placeholder="Nome" class="form-control"
+                        onblur="valida_nome(this)" required value="<%=livro_item.nome_livro %>">
                 </div>
                 <div class="form-group">
                     <label for="autor">Autor</label>
-                    <input type="text" onblur="valida_autor(this)" id="autor" name="autor" class="form-control" placeholder="Autor" required value="<%=livro_item.autor %>">
+                    <input type="text" onblur="valida_autor(this)" id="autor" name="autor_livro" class="form-control" placeholder="Autor" required value="<%=livro_item.autor_livro %>">
                 </div>
                 <div class="form-group">
-                    <select class="form-control" name="categoria" id="categoria" onblur="valida_categoria(this)" required value="<%=livro_item.categoria %>">
+                    <select class="form-control" name="genero_livro" id="categoria" onblur="valida_categoria(this)" required value="<%=livro_item.genero_livro %>">
                         <option value="">Selecione a Categoria</option>
                         <option value="Romance">Romance</option>
                         <option value="Terror">Terror</option>
@@ -40,7 +40,7 @@
                         <option value="Biografia">Biografia</option>
                     </select>
                 </div>
-                <input type="hidden" name="id" value="<%=livro_item._id %>">
+                <input type="hidden" name="id_livro" value="<%=livro_item.id_livro %>">
                 <button type="submit" id="enviar" class="btn btn-primary" onclick="enviar_dados()">Salvar</button>
             </form>
         </div>

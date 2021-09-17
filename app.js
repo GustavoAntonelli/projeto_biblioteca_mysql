@@ -53,14 +53,6 @@ app.get("/livros", (req, res)=>{
     
 });
 
-// app.get("/livros", (req, res)=>{
-//     let consulta = Livros.find({}, (err, livro)=>{
-//         if(err){
-//             return res.status(500).send("Erro ao consultar livro");
-//         }
-//         return res.render("livros", {livros_lista:livro})
-//     })
-// });
 
 app.get("/procuraLivros", (req, res) => {
     var resName = req.query.procura;
@@ -87,70 +79,51 @@ app.post("/cadastrarLivro", (req, res)=>{
     console.log(livroNome)
     livroAutor = req.body.autor;
     livroCategoria = req.body.categoria;
-
-        var sql = `INSERT INTO livros(nome_livro, autor_livro, genero_livro) VALUES('${livroNome}', '${livroAutor}', '${livroCategoria}')`;
-        con.query(sql, function(err, result){
+    var sql = `INSERT INTO livros(nome_livro, autor_livro, genero_livro) VALUES('${livroNome}', '${livroAutor}', '${livroCategoria}')`;
+    con.query(sql, function(err, result){
         if(err) throw err;
           console.log("dado inserido: " + sql);
-        });
+    });
         return res.redirect("/livros");
 });
 
-
-// app.post("/cadastrarLivro", (req, res)=>{
-//     let livro = new Livros();
-    // livro.nome = req.body.nome;
-    // livro.autor = req.body.autor;
-    // livro.categoria = req.body.categoria;
-//     livro.save((err)=>{
-//         if(err){
-//             return res.status(500).send("Erro ao salvar livro no BANCOD DE DADOS");
-//         }
-//         return res.redirect("/livros");
-//     });
-// });
 
 //ROTA DELETAR LIVRO DO DB
 app.get("/deletarLivro/:id", (req, res)=>{
-    var del = req.params.id;
-
-    Livros.deleteOne({_id:del}, (err)=>{
-        if(err){
-            return res.status(500).send("Erro ao deletar livro");
-        }
-        return res.redirect("/livros");
+    var id = req.params.id;
+    var sql = `DELETE FROM livros WHERE id_livro = ?`;
+    con.query(sql, [id], function (err, result) {
+        if (err) throw err;
+        console.log("Number of records deleted: " + sql);
     });
+    return res.redirect("/livros");
+
 });
+
 
 //ROTA DE EDIÇAO
 app.get("/editarLivro/:id", (req, res)=>{
-    Livros.findById(req.params.id, (err, livro)=>{
-        if(err){
-            return res.status(500).send("Erro ao consultar livro");
-        }
-        return res.render("editarformlivro", {livro_item:livro})
-        
-    });
+    var UserId = req.params.id;
+    var sql = `SELECT * FROM livros WHERE id_livro= ${UserId}`;
+    con.query(sql, function (err, rows) {
+        if (err) throw err;
+        console.log("Number of records update: " + sql);
+        return res.render("editarformlivro", {livro_item:rows[0]})
+    });  
 });
+
 
 //ROTA EDITANDO LIVRO
 app.post("/editarLivro", (req, res)=>{
-    var id = req.body.id;
-    Livros.findById(id, (err, livro)=>{
-        if(err){
-            return res.status(500).send("Erro ao editar livro");
-        }
-        livro.nome = req.body.nome;
-        livro.autor = req.body.autor;
-        livro.categoria = req.body.categoria;
-        livro.save((err)=>{
-            if(err){
-                return res.status(500).send("Erro ao editar livro");
-            }
-            return res.redirect("/livros") 
-        });
-    });
-})
+    var id = req.body.id_livro;
+    var updateData= req.body;
+    var sql = `UPDATE livros SET ? WHERE id_livro= ?`;
+    con.query(sql, [updateData, id], function (err, data) {
+        if (err) throw err;
+        console.log(data.affectedRows + " record(s) updated");
+      });
+      res.redirect('/livros');
+ });
 
 app.listen(PORT, ()=>{
     console.log(`server running gate ${PORT}`)
