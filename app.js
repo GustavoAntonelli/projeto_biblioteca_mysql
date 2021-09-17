@@ -11,19 +11,6 @@ var con = mysql.createConnection({
     database: "biblioteca"
 });
 
-// con.connect(function (err) {
-//     var resultado = 0;
-//     if (err) throw err;
-//     console.log("Conectado!");
-//     var sql = "SELECT * FROM livros";
-//     con.query(sql, function (err, result) {
-//         resultado = result;
-//         console.log(resultado);
-//         if (err) throw err;
-//         console.log("dado inserido: " + sql);
-//     });
-// });
-
 
 app.set("view engine", "ejs");
 app.set("views",__dirname,"/views");
